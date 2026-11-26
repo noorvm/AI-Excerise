@@ -42,16 +42,20 @@ while True:
         print("New chat loaded")
         chat=start_new_chat()
         continue
+    if question.lower().strip() == "help":
+        print("Available Commands:\n \n1.history\t - Show conversation\n2.reset\t - Start new conversation\n3.exit\t - Close chatbot\n4.help\t - Show commands\n-----------------------------------------------------------------------------\n")
+        continue
 
     if question.lower().strip() == "history":
-        user_message = [m for m in chat.get_history() if m.role == "user"]
+        user_message = [m for m in chat.get_history() ]
         if not user_message:
             print("\n----------No Historry----------\n")
         else:
             print("\n--------Your Previous Questions----------")
             for i, message in enumerate(user_message, start=1):
+                role = "You" if message.role == "user" else "Gemini"
                 text ="".join(part.text for part in message.parts if part.text)
-                print(f"{i}:{text}")
+                print(f"{i}.{role}:{text} \n")
                 print("--------------------\n")
                 continue 
     else:
